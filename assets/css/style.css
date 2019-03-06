@@ -1,0 +1,61 @@
+body{
+    background-image: url("executor.png");
+    background: cover;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    color: white;
+}
+
+.container{
+    height: 100%;
+    border: 2px white solid; 
+
+}
+
+h1, h4{
+    font-size: 1.5rem;
+}
+
+h1{
+    text-align: right;
+}
+
+.friendly{
+    display: inline-block;
+    background-color: white;
+    border: 5px green solid;
+    padding: 5px;
+    height: 120px;
+    width: 175px;
+    justify-content: center;
+}
+
+.friendly:hover, .hostile:hover{
+     
+    cursor: crosshair;
+
+}
+.hostile{
+    display: inline-block;
+    border: 5px white solid;
+    padding: 5px;
+    height: 120px;
+    width: 175px;
+    justify-content: center;
+    background-color: red;
+
+}
+
+
+.name, .hit-points{
+    color: black;
+    text-align: center;
+}
+
+img{
+    margin: 0 auto;
+    height: 70px;
+    width: 100px;
+}
