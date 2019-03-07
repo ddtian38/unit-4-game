@@ -37,6 +37,11 @@ h1{
     cursor: crosshair;
 
 }
+
+.characters, .enemies, .defender{
+    height: 270px;
+}
+
 .hostile{
     display: inline-block;
     border: 5px white solid;
@@ -56,6 +61,6 @@ h1{
 
 img{
     margin: 0 auto;
-    height: 70px;
-    width: 100px;
+    height: 80px;
+    width: 50%;
 }
