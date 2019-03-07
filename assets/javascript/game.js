@@ -1,36 +1,53 @@
-
-
-var characters = { "Captain Rex": {attack: 20,
-                        hitPoints: 100
+//Creating characters object
+var characters = { player1: {name: "Captain Rex",
+                        attack: 20,
+                        hitPoints: 130,
+                        counterAttack: 20
                 },
-                "Commander Cody": {attack: 40,
-                    hitPoints: 125
+                player2: {name: "Commander Cody",
+                    attack: 12,
+                    hitPoints: 130,
+                    counterAttack: 20
 
-                },
+                },  
 
-                "General Krell": {attack: 30,
-                    hitPoints: 130
+                player3: {name: "General Krell",
+                    attack: 14,
+                    hitPoints: 130,
+                    counterAttack: 20
                 },
-                "General Grevious": {attack: 45,
-                    hitPoints: 140
-                    
+                player4: { name: "General Grevious",
+                    attack: 16,
+                    hitPoints: 130,
+                    counterAttack: 20
                 }
 }
+//Declaring and initializing global variables
+var hero, villian, heroAttack = 0, villianAttack = 0;
 var heroDead = false;
 var villianDead = false;
-var thereIsVillian = true;
+var thereIsVillian = true;;
 var charcList = $('.friendly');
 
-$('#rex .hit-points').text(characters["Captain Rex"].hitPoints);
-$('#cody .hit-points').text(characters["Commander Cody"].hitPoints);
-$('#krell .hit-points').text(characters["General Krell"].hitPoints);
-$('#grevious .hit-points').text(characters["General Grevious"].hitPoints);
+//Setting up names and hitpoints on html file
+$('#rex .name').text(characters.player1.name);
+$('#cody .name').text(characters.player2.name);
+$('#krell .name').text(characters.player3.name);
+$('#grevious .name').text(characters.player4.name);
 
+$('#rex .hit-points').text(characters.player1.hitPoints);
+$('#cody .hit-points').text(characters.player2.hitPoints);
+$('#krell .hit-points').text(characters.player3.hitPoints);
+$('#grevious .hit-points').text(characters.player4.hitPoints);
+
+//Function chooses heroes and enemies for the game
 function choosingHeroAndEnemies(){
+    $(".characters h4").text("YOUR CHARACTER");
     $(this).addClass("hero");
     choosingEnemies();
 }
 
+//Function chooses enemies
 function choosingEnemies(){
     for (var i = 0; i < charcList.length; i++){
         if(!(charcList.eq(i).hasClass("hero"))){
@@ -39,41 +56,54 @@ function choosingEnemies(){
         }
     }
 }
-function chooseVillian () {
-    $(this).addClass("villian");
-    var defender =  $(this).detach();
-    defender.appendTo($('.defender'));
+
+//Function chooses villian out of list of enemies
+function chooseVillian(){
+        $(this).addClass("villian");
+        var defender =  $(this).detach();
+        defender.appendTo($('.defender'));
  };
 
+//Function runs the game
  function runGame(){
+
+    //Checks if a villian is selected
     thereIsVillian = ($(".villian").length > 0);
-    var hero = characters[$(".hero .name").text()];
-    var villian =  characters[$(".villian .name").text()];
     
+    //If villian exists, hero can attack villian.
     if(thereIsVillian){
-      var heroAttack = hero["attack"];
-      var villianAttack = villian["attack"];
-      console.log(villianAttack);
+      //Increase hero's attack point and villian's counter attack points based on their stats in the object.
+      heroAttack += hero.attack;
+      villianAttack = villian.counterAttack;
+      //Display the stats.
       $("#attack-status").text("You attacked " + $(".villian .name").text() + " for " + heroAttack +  " damage. "  +  $(".villian .name").text()+ " attacked you back" + " for " + villianAttack + " damage.");
+      //Subtract the hero/villian hit points from attack/counterattack points and display on HTML file.
       hero.hitPoints -= villianAttack;
       villian.hitPoints -= heroAttack;
       $('.hero .hit-points').text(hero.hitPoints);
       $('.villian .hit-points').text(villian.hitPoints);
+      //Checks to see if the villian or hero is dead
       villianDead = (villian.hitPoints <= 0);
       heroDead = (hero.hitPoints <= 0);
   
+     //If hero is dead, the reset button is displayed and all other events are disabled.
       if(heroDead){
           $("#attack-status").text("Game over. Reset to play.")
-          $("#attack-status").append($("<button class=\"reset\"> Reset </button>"));
-        $(document).off("click", ".friendly", choosingHeroAndEnemies);
-        $(document).off("click", ".hostile", chooseVillian);
-        $(document).off("click", "#attack", runGame);
+          $("#attack-status").append($("<br><button class=\"reset btn btn-dark\"> Reset </button>"));
+            $(document).off("click", ".friendly", choosingHeroAndEnemies);
+            $(document).off("click", ".hostile", chooseVillian);
+            $(document).off("click", "#attack", runGame);
       }
-        if(villianDead){
+      //If the villian dies, player can select the next enemy to fight.
+        if(villianDead && !heroDead){
+            heroAttack += hero.attack;
+            villianAttack = 0;
+            $("#attack-status").text("Congratulations! " + $(".villian .name").text() + " has been defeated. Select another enemy fight.")
             $(".defender").empty();
-            $("#attack-status").text("Congratlations! " + villian + " has been defeated. Select another enemy fight.")
+            
         }
       }
+      //If villian is not present, player needs to select one from the enemy
       else{
           $("#attack-status").text("No enemy is here. Please select an enemy.");
       }
@@ -82,18 +112,17 @@ function chooseVillian () {
 
 $(document).ready(function(){
 
+    
     $(document).on("click", ".friendly", choosingHeroAndEnemies);
 
     $(document).on("click", ".hostile", chooseVillian);
 
+    $(document).on("click", "#attack", runGame);
 
-$(document).on("click", "#attack", runGame);
+    $(document).on("click", ".reset", function(){
+        location.reload();
+    })
 
-$(document).on("click", ".reset", function(){
-    location.reload();
-})
-
-
-
+    console.log($(".characters h4"));
 
 });

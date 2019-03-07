@@ -1,66 +1,90 @@
+/* CSS style fo general body  */
 body{
-    background-image: url("executor.png");
-    background: cover;
+    background-image: url("clones.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
     margin: 0 auto;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 12px;
     color: white;
+
 }
 
 .container{
-    height: 100%;
+    margin: 50px auto;
     border: 2px white solid; 
 
 }
 
-h1, h4{
+h1{
+    font-size: 3rem;
+    text-align: right;
+}
+
+h4{
     font-size: 1.5rem;
 }
 
-h1{
-    text-align: right;
+h1, h4, p{
+    text-shadow: 4px 2px black;
+}
+
+/* CSS style for character cards. */
+.avatar{
+    display: inline-block;
+    padding: 5px;
+    height: 150px;
+    width: 175px;
+    justify-content: center;
+}
+
+.hostile{
+    display: inline-block;
+    margin-left: 5px;
+    border: 5px white solid;
+    background-color: red;
+    color: white;
 }
 
 .friendly{
     display: inline-block;
     background-color: white;
     border: 5px green solid;
-    padding: 5px;
-    height: 120px;
-    width: 175px;
-    justify-content: center;
+    
+}
+
+img{
+    margin: 0 auto;
+    height: 100px;
+    width: 150px;
 }
 
 .friendly:hover, .hostile:hover{
-     
     cursor: crosshair;
-
 }
 
-.characters, .enemies, .defender{
-    height: 270px;
+.hostile:first-child{
+    margin-left: 0px;
 }
-
-.hostile{
-    display: inline-block;
-    border: 5px white solid;
-    padding: 5px;
-    height: 120px;
-    width: 175px;
-    justify-content: center;
-    background-color: red;
-
-}
-
 
 .name, .hit-points{
     color: black;
     text-align: center;
 }
 
-img{
-    margin: 0 auto;
-    height: 80px;
-    width: 50%;
+#attack-status{
+    font-size: 20px;
+}
+
+/* CSS style for attack and reset button. */
+button{
+    margin: 5px;
+}
+
+/* Media query for game */
+@media screen and (max-width: 480px){
+    h1{
+        text-align: left;
+    }
+
 }
