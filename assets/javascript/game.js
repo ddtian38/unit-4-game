@@ -1,13 +1,13 @@
 //Creating characters object
 var characters = { player1: {name: "Captain Rex",
-                        attack: 20,
-                        hitPoints: 130,
+                        attack: 25,
+                        hitPoints: 150,
                         counterAttack: 20
                 },
                 player2: {name: "Commander Cody",
-                    attack: 12,
+                    attack: 18,
                     hitPoints: 130,
-                    counterAttack: 20
+                    counterAttack: 25
 
                 },  
 
@@ -18,7 +18,7 @@ var characters = { player1: {name: "Captain Rex",
                 },
                 player4: { name: "General Grevious",
                     attack: 16,
-                    hitPoints: 130,
+                    hitPoints: 140,
                     counterAttack: 20
                 }
 }
@@ -67,6 +67,7 @@ function chooseVillian(){
         var defender =  $(this).detach();
         defender.appendTo($('.defender'));
         villian = characters[$(".villian").attr("id")];
+        $("#attack-status").text("You have selected " + $(".villian .name").text() + " as the villian.")
         thereIsVillian = true;
     }
     else{
@@ -74,6 +75,14 @@ function chooseVillian(){
     }
  };
 
+
+ function reset(){
+    $("#attack-status").append($("<br><button class=\"reset btn btn-dark\"> Reset </button>"));
+    $(document).off("click", ".friendly", choosingHeroAndEnemies);
+    $(document).off("click", ".hostile", chooseVillian);
+    $(document).off("click", "#attack", runGame);
+
+ }
 //Function runs the game
  function runGame(){
 
@@ -99,19 +108,23 @@ function chooseVillian(){
      //If hero is dead, the reset button is displayed and all other events are disabled.
       if(heroDead){
           $("#attack-status").text("Game over." +  $(".villian .name").text() + " has defeated you. Press the reset button to play again.")
-          $("#attack-status").append($("<br><button class=\"reset btn btn-dark\"> Reset </button>"));
-            $(document).off("click", ".friendly", choosingHeroAndEnemies);
-            $(document).off("click", ".hostile", chooseVillian);
-            $(document).off("click", "#attack", runGame);
+          reset();
       }
       //If the villian dies, player can select the next enemy to fight.
         if(villianDead && !heroDead){
-            heroAttack += hero.attack;
-            villianAttack = 0;
-            thereIsVillian = false;
-            $("#attack-status").text("Congratulations! " + $(".villian .name").text() + " has been defeated. Select another enemy fight.")
-            $(".defender").empty();
-            
+            {
+                heroAttack += hero.attack;
+                villianAttack = 0;
+                thereIsVillian = false;
+                $("#attack-status").text("Congratulations! " + $(".villian .name").text() + " has been defeated. Select another enemy fight.")
+                $(".defender").empty();
+
+                if($(".hostile").length === 0){
+                    $("#attack-status").text("Congratulations! You have been defeated all the enemies!");
+                    reset();
+
+                }
+            }
         }
       }
       //If villian is not present, player needs to select one from the enemy
@@ -124,11 +137,13 @@ function chooseVillian(){
 $(document).ready(function(){
 
     
+    
     $(document).on("click", ".friendly", choosingHeroAndEnemies);
 
     $(document).on("click", ".hostile", chooseVillian);
 
     $(document).on("click", "#attack", runGame);
+
 
     $(document).on("click", ".reset", function(){
         location.reload();
