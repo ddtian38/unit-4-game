@@ -46,7 +46,7 @@ h1, h4, p{
     color: white;
 }
 
-.friendly{
+.friendly, .hero{
     display: inline-block;
     background-color: white;
     border: 5px green solid;
