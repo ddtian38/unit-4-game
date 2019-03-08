@@ -113,7 +113,6 @@ function chooseVillian(){
       //If the villian dies, player can select the next enemy to fight.
         if(villianDead && !heroDead){
             {
-                heroAttack += hero.attack;
                 villianAttack = 0;
                 thereIsVillian = false;
                 $("#attack-status").text("Congratulations! " + $(".villian .name").text() + " has been defeated. Select another enemy fight.")
